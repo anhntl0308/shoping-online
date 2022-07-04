@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
+</head>
+
+<body>
+
+    <div class="container justify-items-center content-center mx-auto mt-10 max-w-[600px]">
+        <H1 class="text-center text-4xl mb-10">List Category</H1>
+        <div>
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left text-gray-500 ">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Category Id
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Category Name
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                <span class="sr-only">Detail</span>
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                <span class="sr-only">Edit</span>
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                <span class="sr-only">Delete</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each=" category : ${categories}" class="bg-white border-b ">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 ">
+                                [[${category.categoryid}]]
+                            </th>
+                            <td th:text="${category.categoryname}" class="px-6 py-4">
+                                
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <a th:href="@{'/admin/categories/view/' + ${category.categoryid}}" class="font-medium text-blue-600 ">Detail</a>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <a th:href="@{'/admin/categories/edit/' + ${category.categoryid}}" class="font-medium text-green-600 ">Edit</a>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <a th:href="@{'/admin/categories/delete/' + ${category.categoryid}}" class="font-medium text-red-600 ">Delete</a>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
+</body>
+
+</html>
