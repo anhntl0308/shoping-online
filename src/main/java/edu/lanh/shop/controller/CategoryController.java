@@ -3,12 +3,16 @@ package edu.lanh.shop.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,7 +56,11 @@ public class CategoryController {
 	}
 	
 	@PostMapping("saveOrUpdate")
-	public ModelAndView saveOrUpdate(ModelMap model, CategoryDto categoryDto) {
+	public ModelAndView saveOrUpdate(ModelMap model, 
+			@Valid @ModelAttribute("categoryDto") CategoryDto categoryDto, BindingResult result) {
+		if(result.hasErrors()) {
+			return new ModelAndView("admin/category/addOrEdit");
+		}
 		Category category = new Category();
 		BeanUtils.copyProperties(categoryDto, category);
 		categoryService.save(category);

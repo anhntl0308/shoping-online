@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Length;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class CategoryDto{
 	private Long categoryid;
 	@NotEmpty
-	@Min(value = 5)
+	@Length(min = 5)
 	private String categoryname;
 	
 	private Boolean isEdit = false;

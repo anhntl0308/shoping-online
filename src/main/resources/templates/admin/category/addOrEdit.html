@@ -13,27 +13,55 @@
     <div class="container justify-items-center content-center mx-auto mt-10 max-w-[400px]">
         <H1 class="text-center text-4xl mb-10">Add or Edit</H1>
         <form th:action="@{/admin/categories/saveOrUpdate}" th:object="${categoryDto}" method="post">
-        	<div class="mb-6">
+            <div class="mb-6">
                 <label for="category-id" class="block mb-2 text-sm font-medium text-gray-900 "> Category Id</label>
                 <input type="hidden" th:field="*{isEdit}">
                 <input type="text" id="category-id" th:field="*{categoryid}"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Category Id" readonly>
+                <div th:if="${#fields.hasErrors('categoryid')}" class="flex p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                    role="alert">
+                    <svg class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <span class="font-medium">Category id is required</span>
+                    </div>
+                </div>
             </div>
             <div class="mb-6">
                 <label for="category-name" class="block mb-2 text-sm font-medium text-gray-900 "> Category Name</label>
                 <input type="text" id="category-name" th:field="*{categoryname}"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     placeholder="Category Name">
+               	<div th:if="${#fields.hasErrors('categoryname')}" class="flex p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                    role="alert">
+                    <svg class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <span class="font-medium">Name is required or invalid</span>
+                    </div>
+                </div>
             </div>
             <div class="mb-6 mx-auto">
                 <button type="reset"
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Reset</button>
                 <a type="submit" th:href="@{/admin/categories}"
                     class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">ListCategory</a>
-                <input  th:if="${categoryDto.isEdit}" type="submit" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center" value="Update">
-                <input  th:if="${!categoryDto.isEdit}" type="submit" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center" value="Save">
-                
+                <input th:if="${categoryDto.isEdit}" type="submit"
+                    class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+                    value="Update">
+                <input th:if="${!categoryDto.isEdit}" type="submit"
+                    class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+                    value="Save">
+
             </div>
         </form>
     </div>
