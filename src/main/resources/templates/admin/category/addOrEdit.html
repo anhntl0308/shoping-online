@@ -12,12 +12,13 @@
 
     <div class="container justify-items-center content-center mx-auto mt-10 max-w-[400px]">
         <H1 class="text-center text-4xl mb-10">Add or Edit</H1>
-        <form th:action="@{/admin/categories/saveOrUpdate}" th:object="${categoryDto}"  method="post">
+        <form th:action="@{/admin/categories/saveOrUpdate}" th:object="${categoryDto}" method="post">
         	<div class="mb-6">
                 <label for="category-id" class="block mb-2 text-sm font-medium text-gray-900 "> Category Id</label>
+                <input type="hidden" th:field="*{isEdit}">
                 <input type="text" id="category-id" th:field="*{categoryid}"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder="Category Id">
+                    placeholder="Category Id" readonly>
             </div>
             <div class="mb-6">
                 <label for="category-name" class="block mb-2 text-sm font-medium text-gray-900 "> Category Name</label>
@@ -30,8 +31,9 @@
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Reset</button>
                 <a type="submit" th:href="@{/admin/categories}"
                     class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">ListCategory</a>
-                <input type="submit"
-                    class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center" value="Save">
+                <input  th:if="${categoryDto.isEdit}" type="submit" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center" value="Update">
+                <input  th:if="${!categoryDto.isEdit}" type="submit" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center" value="Save">
+                
             </div>
         </form>
     </div>

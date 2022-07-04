@@ -18,5 +18,6 @@ public class CategoryDto{
 	@Min(value = 5)
 	private String categoryname;
 	
+	private Boolean isEdit = false;
 	
 }

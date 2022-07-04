@@ -1,6 +1,7 @@
 package edu.lanh.shop.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,8 +32,18 @@ public class CategoryController {
 	
 	
 	@GetMapping("edit/{categoryId}")
-	public String edit() {
-		return "admin/category/addOrEdit";
+	public ModelAndView edit(ModelMap model, @PathVariable("categoryId") Long categoryId) {
+		Optional<Category> opt = categoryService.findById(categoryId);
+		CategoryDto categoryDto = new CategoryDto();
+		if(opt.isPresent()) {
+			Category entity = opt.get();
+			BeanUtils.copyProperties(entity, categoryDto);
+			categoryDto.setIsEdit(true);
+			model.addAttribute("categoryDto", categoryDto);
+			return new ModelAndView("admin/category/addOrEdit", model);
+		}
+		model.addAttribute("message", "Category is not existed");
+		return new ModelAndView("redirect:/admin/categories", model);
 	}
 	
 	@GetMapping("delete/{categoryId}")
@@ -44,11 +56,11 @@ public class CategoryController {
 		Category category = new Category();
 		BeanUtils.copyProperties(categoryDto, category);
 		categoryService.save(category);
-		model.addAttribute("message", "Categor is saved");
-		return new ModelAndView("redirect:/admin/categories", model);
+		model.addAttribute("message", "Category is saved");
+		return new ModelAndView("forward:/admin/categories", model);
 	}
 	
-	@GetMapping("")
+	@RequestMapping("")
 	public String list(ModelMap model) {
 		List<Category> list = categoryService.findAll();
 		model.addAttribute("categories", list);
