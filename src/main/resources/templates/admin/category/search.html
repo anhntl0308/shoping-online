@@ -1,10 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
 </head>
+
 <body>
 
+    <div class="container justify-items-center content-center mx-auto mt-10 max-w-[600px]">
+        <H1 class="text-center text-4xl mb-10">List Category</H1>
+        <div>
+        	<div class="flex justify-between mb-5">
+                <form th:action="@{/admin/categories/search}" class="flex items-center">
+				    <div class="relative w-full">
+				        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+				            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+				        </div>
+				        <input name="name" type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2." placeholder="abc" >
+				    </div>
+				    <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></button>
+				</form>
+				<a th:href="@{/admin/categories/add}" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">Add new</a>
+	        </div>
+        	<div th:if="${message != null}">
+	        	<div id="toast-success" class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+	                <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+	                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+	                </div>
+	                <div class="ml-3 text-sm font-normal">[[${message}]]</div>
+	                <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8" data-dismiss-target="#toast-success" aria-label="Close">
+	                    <span class="sr-only">Close</span>
+	                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+	                </button>
+	            </div>
+	        </div>
+        	
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left text-gray-500 ">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Category Id
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Category Name
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                <span class="sr-only">Detail</span>
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                <span class="sr-only">Edit</span>
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                <span class="sr-only">Delete</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each=" category : ${categories}" class="bg-white border-b ">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 ">
+                                [[${category.categoryid}]]
+                            </th>
+                            <td th:text="${category.categoryname}" class="px-6 py-4">
+                                
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <a th:href="@{'/admin/categories/view/' + ${category.categoryid}}" class="font-medium text-blue-600 ">Detail</a>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <a th:href="@{'/admin/categories/edit/' + ${category.categoryid}}" class="font-medium text-green-600 ">Edit</a>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <a th:href="@{'/admin/categories/delete/' + ${category.categoryid}}" class="font-medium text-red-600 ">Delete</a>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </body>
+
 </html>

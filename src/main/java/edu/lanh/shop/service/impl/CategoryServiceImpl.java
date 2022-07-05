@@ -23,9 +23,15 @@ public class CategoryServiceImpl implements CategoryService{
 	private CategoryRepository categoryRepository;
 
 	@Override
+	public List<Category> findByCategorynameContaining(String categoryname) {
+		return categoryRepository.findByCategorynameContaining(categoryname);
+	}
+	
+	@Override
 	public <S extends Category> S save(S entity) {
 		return categoryRepository.save(entity);
 	}
+	
 
 	@Override
 	public <S extends Category> Optional<S> findOne(Example<S> example) {
