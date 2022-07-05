@@ -1,16 +1,23 @@
 package edu.lanh.shop.domain;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name="categories")
 public class Category {
@@ -22,31 +29,8 @@ public class Category {
 			columnDefinition="nvarchar(100) not null")
 	private String categoryname;
 
-	public Long getCategoryid() {
-		return categoryid;
-	}
-
-	public void setCategoryid(Long categoryid) {
-		this.categoryid = categoryid;
-	}
-
-	public String getCategoryname() {
-		return categoryname;
-	}
-
-	public void setCategoryname(String categoryname) {
-		this.categoryname = categoryname;
-	}
-
-	public Category() {
-		super();
-	}
-
-	public Category(Long categoryid, String categoryname) {
-		super();
-		this.categoryid = categoryid;
-		this.categoryname = categoryname;
-	}
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+	private Set<Product> products;
 	
 	
 }

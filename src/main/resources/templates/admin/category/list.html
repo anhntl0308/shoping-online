@@ -1,16 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Insert title here</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
-</head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/dashboardlayout.html}">
 
 <body>
 
-    <div class="container justify-items-center content-center mx-auto mt-10 max-w-[600px]">
+    <div layout:fragment="content" class="container justify-items-center content-center mx-auto mt-10 max-w-[600px]">
         <H1 class="text-center text-4xl mb-10">List Category</H1>
         <div>
         	<div th:if="${message != null}">
@@ -71,7 +65,4 @@
             </div>
         </div>
     </div>
-    <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </body>
-
-</html>
