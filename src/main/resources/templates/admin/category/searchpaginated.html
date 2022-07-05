@@ -90,7 +90,18 @@
                 </table>
             </div>
         </div>
+        
 		<div class="flex justify-center">
+				<form>
+				<label for="size" class="mb-2 text-sm font-medium text-gray-900">Page size: </label>
+				<select name="size" id="size" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+				onchange="this.form.submit()">
+					  <option th:selected=${categoriesPage.size==5} value="5">5</option>
+					  <option th:selected=${categoriesPage.size==10} value="10">10</option>
+					  <option th:selected=${categoriesPage.size==15} value="15">15</option>
+					  <option th:selected=${categoriesPage.size==30} value="30">30</option>
+				</select>
+				</form>
 				<nav class="mt-10" th:if="${categoriesPage.totalPages > 0}">
 					<ul class="inline-flex -space-x-px">
 						<li><a
