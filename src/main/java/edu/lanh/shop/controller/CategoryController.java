@@ -53,8 +53,10 @@ public class CategoryController {
 	}
 	
 	@GetMapping("delete/{categoryId}")
-	public String delete() {
-		return "redirect:/admin/categories/list";
+	public ModelAndView delete(ModelMap model, @PathVariable("categoryId") Long categoryId) {
+		categoryService.deleteById(categoryId);
+		model.addAttribute("message", "Category is deleted!");
+		return new ModelAndView("forward:/admin/categories", model);
 	}
 	
 	@PostMapping("saveOrUpdate")
