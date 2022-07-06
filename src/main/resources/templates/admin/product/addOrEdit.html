@@ -5,10 +5,11 @@
 <body>
 
     <div layout:fragment="content" class="container justify-items-center content-center mx-auto mt-10 max-w-[400px]">
-        <H1 class="text-center text-4xl mb-10">Add or Edit Category</H1>
+        <H1 class="text-center text-4xl mb-10" th:text="${productDto.isEdit?'Edit Product' : 'Add New Product'}">Add or Edit Category</H1>
         <form th:action="@{/admin/products/saveOrUpdate}" th:object="${productDto}" method="post" enctype="multipart/form-data">
             <div class="mb-6">
                 <label for="productId" class="block mb-2 text-sm font-medium text-gray-900 "> Product Id</label>
+                <input type="hidden" th:field="*{isEdit}">
                 <input type="text" id="productId" th:field="*{productId}"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Product Id" readonly>
@@ -156,7 +157,8 @@
                             <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)
                             </p> -->
 
-                            <img id="imageProduct" src ="" />
+                            <img id="imageProduct" th:src="${productDto.image!=null? '/admin/products/images/' + productDto.image : 'images/noimage.jpg'}"
+                            src ="" width="90%"/>
                         </div>
                         <input  th:field="*{imageFile}" id="dropzone-file" onchange="chooseFile(this)" type="file" class="hidden" />
                     </label>
@@ -183,7 +185,7 @@
                 </div>
             </div>
             <div class="mb-6 mx-auto">
-                <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Save</button>
+                <button th:text="${productDto.isEdit? 'Update':'Save'}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Save</button>
                 <a class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">New</a>
 				<a class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Delete</a>
 

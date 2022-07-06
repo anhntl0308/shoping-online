@@ -1,5 +1,6 @@
 package edu.lanh.shop.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,10 +11,13 @@ import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -25,6 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.lanh.shop.domain.Category;
@@ -58,30 +63,53 @@ public class ProductController {
 	}
 	@GetMapping("add")
 	public String add(Model model) {
+		ProductDto productDto = new ProductDto();
+		productDto.setIsEdit(false);
+
 		model.addAttribute("productDto", new ProductDto());
 		return "admin/product/addOrEdit";
 	}
 	
 	@GetMapping("edit/{productId}")
 	public ModelAndView edit(ModelMap model, @PathVariable("productId") Long productId) {
-		Optional<Category> opt = categoryService.findById(productId);
+		Optional<Product> opt = productService.findById(productId);
 		ProductDto productDto = new ProductDto();
 		if(opt.isPresent()) {
-			Category entity = opt.get();
+			Product entity = opt.get();
 			BeanUtils.copyProperties(entity, productDto);
-			//productDto.setIsEdit(true);
-			model.addAttribute("categoryDto", productDto);
-			return new ModelAndView("admin/category/addOrEdit", model);
+			productDto.setCategoryId(entity.getCategory().getCategoryid());
+			productDto.setIsEdit(true);
+			model.addAttribute("productDto", productDto);
+			return new ModelAndView("admin/product/addOrEdit", model);
 		}
-		model.addAttribute("message", "Category is not existed");
-		return new ModelAndView("redirect:/admin/categories", model);
+		model.addAttribute("message", "Product is not existed");
+		return new ModelAndView("redirect:/admin/products", model);
 	}
 	
-	@GetMapping("delete/{categoryId}")
-	public ModelAndView delete(ModelMap model, @PathVariable("categoryId") Long categoryId) {
-		categoryService.deleteById(categoryId);
-		model.addAttribute("message", "Category is deleted!");
-		return new ModelAndView("forward:/admin/categories", model);
+	@GetMapping("/images/{filename:.+}")
+	@ResponseBody
+	public ResponseEntity<Resource> serveFile(@PathVariable String filename){
+		Resource file = storageService.loadAsResourcce(filename);
+		
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, 
+				"attachment; filename=\"" + file.getFilename() + "\"").body(file);
+	}
+	
+	
+	@GetMapping("delete/{productId}")
+	public ModelAndView delete(ModelMap model, @PathVariable("productId") Long productId) 
+			throws IOException {
+		Optional<Product> opt = productService.findById(productId);
+		if(opt.isPresent()) {
+			if(!StringUtils.isEmpty("uploads/images/"+opt.get().getImage())) {
+				storageService.delete("uploads/images/"+opt.get().getImage());
+			}
+			productService.delete(opt.get());
+			model.addAttribute("message", "Product is deleted!");
+		} else {
+			model.addAttribute("message", "Product is not found!");
+		}
+		return new ModelAndView("forward:/admin/products", model);
 	}
 	
 	@PostMapping("saveOrUpdate")
