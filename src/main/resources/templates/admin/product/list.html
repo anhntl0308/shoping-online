@@ -4,7 +4,7 @@
 
 <body>
 
-    <div layout:fragment="content" class="container justify-items-center content-center mx-auto mt-10 max-w-[600px]">
+    <div layout:fragment="content" class="container justify-items-center content-center mx-auto mt-10 max-w-[1000px]">
         <H1 class="text-center text-4xl mb-10">List Category</H1>
         <div>
         	<div th:if="${message != null}">
@@ -59,7 +59,7 @@
                     <tbody>
                         <tr th:each=" product : ${products}" class="bg-white border-b ">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 ">
-                                [[${product.categoryid}]]
+                                [[${product.productId}]]
                             </th>
                             <td th:text="${product.name}" class="px-6 py-4">
                                 
@@ -70,23 +70,23 @@
                             <td th:text="${product.unitPrice}" scope="col" class="px-6 py-3">
                                 Product Unit Price
                             </td>
-                            <td th:text="${product.quantity}" scope="col" class="px-6 py-3">
+                            <td th:text="${product.discount}" scope="col" class="px-6 py-3">
                                 Product Discount
                             </td>
-                            <td th:text="${product.quantity}" scope="col" class="px-6 py-3">
+                            <td th:text="${product.status}" scope="col" class="px-6 py-3">
                                 Product Status
                             </td>
-                            <th th:text="${product.quantity}" scope="col" class="px-6 py-3">
+                            <th th:text="${product.category.categoryname}" scope="col" class="px-6 py-3">
                                 Product Category
                             </th>
                             <td class="px-6 py-4 text-right">
-                                <a th:href="@{'/admin/categories/view/' + ${category.categoryid}}" class="font-medium text-blue-600 ">Detail</a>
+                                <a th:href="@{'/admin/products/view/' + ${product.productId}}" class="font-medium text-blue-600 ">Detail</a>
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <a th:href="@{'/admin/categories/edit/' + ${category.categoryid}}" class="font-medium text-green-600 ">Edit</a>
+                                <a th:href="@{'/admin/products/edit/' + ${product.productId}}" class="font-medium text-green-600 ">Edit</a>
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <a th:href="@{'/admin/categories/delete/' + ${category.categoryid}}" class="font-medium text-red-600 ">Delete</a>
+                                <a th:href="@{'/admin/products/delete/' + ${product.productId}}" class="font-medium text-red-600 ">Delete</a>
                             </td>
                         </tr>
                         
