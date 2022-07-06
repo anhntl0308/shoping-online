@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/dashboardlayout.html}">
+
+<body>
+
+    <div layout:fragment="content" class="container justify-items-center content-center mx-auto mt-10 max-w-[400px]">
+        <H1 class="text-center text-4xl mb-10">Add or Edit Category</H1>
+        <form th:action="@{/admin/products/saveOrUpdate}" th:object="${productDto}" method="post" enctype="multipart/form-data">
+            <div class="mb-6">
+                <label for="productId" class="block mb-2 text-sm font-medium text-gray-900 "> Product Id</label>
+                <input type="text" id="productId" th:field="*{productId}"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Product Id" readonly>
+                <div 
+                    class="flex p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg "
+                    role="alert">
+                    <svg class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <span class="font-medium">Product id is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-6">
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 "> Product Name</label>
+                <input type="text" id="name" th:field="*{name}"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                    placeholder="Product Name">
+                <div
+                    class="flex p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg "
+                    role="alert">
+                    <svg class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <span class="font-medium">Name is required or invalid</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-6">
+                <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 "> Product Quantity</label>
+                <input type="text" id="quantity" th:field="*{quantity}"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                    placeholder="0">
+                <div 
+                    class="flex p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg "
+                    role="alert">
+                    <svg class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <span class="font-medium">Quantity is required or invalid</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label for="discount" class="block mb-2 text-sm font-medium text-gray-900 "> Product Discount</label>
+                <input type="text" id="discount" th:field="*{discount}"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                    placeholder="0">
+                <div 
+                    class="flex p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg "
+                    role="alert">
+                    <svg class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <span class="font-medium">Discount is required or invalid</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label for="unitPrice" class="block mb-2 text-sm font-medium text-gray-900">Category</label>
+                <select th:field="*{categoryId}" id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                    <option th:each=" item : ${categories}" th:value="${item.categoryid}"
+                            th:text="${item.categoryname}" th:selected="${item.categoryid == productDto.categoryId}">Category Name</option>
+                </select>
+                <div 
+                    class="flex p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg "
+                    role="alert">
+                    <svg class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <span class="font-medium">Category is required or invalid</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-6">
+                <label for="status" class="block mb-2 text-sm font-medium text-gray-900"> Status</label>
+                <select th:field="*{status}" name="status" id="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    <option value="0">Out of stock</option>
+                    <option value="1">On sale</option>
+                    <option value="2">Featured</option>
+                    <option value="3">Bestseller</option>
+                    <option value="4">Out of Order</option>
+                </select>
+                <div 
+                    class="flex p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg"
+                    role="alert">
+                    <svg class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <span class="font-medium">Status is required or invalid</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-6">
+                <script>
+                    function chooseFile(fileInput){
+                        if(fileInput.files && fileInput.files[0]){
+                            var reader = new FileReader();
+
+                            reader.onload = function(e){
+                                $("#imageProduct").attr('src', e.target.result);
+                            }
+
+                            reader.readAsDataURL(fileInput.files[0]);
+                        }
+                    }
+                </script>
+                <div class="flex justify-center items-center w-full">
+                    <label for="dropzone-file"  class="flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer">
+                        <div class="flex flex-col justify-center items-center pt-5 pb-6">
+                            <!-- <svg class="mb-3 w-10 h-10 text-gray-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
+                                </path>
+                            </svg>
+                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click
+                                    to upload</span> or drag and drop</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)
+                            </p> -->
+
+                            <img id="imageProduct" src ="" />
+                        </div>
+                        <input  th:field="*{imageFile}" id="dropzone-file" onchange="chooseFile(this)" type="file" class="hidden" />
+                    </label>
+                </div>
+            </div>
+            <div class="mb-6">
+                <label for="description" class="block mb-2 text-sm font-medium text-gray-900 "> Product
+                    Decription</label>
+                <input type="text" id="description" th:field="*{description}"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                    placeholder="0">
+                <div
+                    class="flex p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg "
+                    role="alert">
+                    <svg class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <span class="font-medium">Description is required or invalid</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-6 mx-auto">
+                <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Save</button>
+                <a class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">New</a>
+				<a class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Delete</a>
+
+            </div>
+        </form>
+
+    </div>
+</body>

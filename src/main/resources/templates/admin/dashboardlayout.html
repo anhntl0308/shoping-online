@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
     <meta charset="ISO-8859-1">
@@ -12,13 +11,14 @@
 <body>
     <div class="flex flex-1">
         <div th:replace="admin/fragments/slidebar::slidebar" class="w-[250px]">
-            
+
         </div>
         <div class="w-full">
             <div layout:fragment="content"></div>
         </div>
     </div>
     <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 
 </html>
