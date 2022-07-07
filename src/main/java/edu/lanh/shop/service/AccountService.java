@@ -62,7 +62,7 @@ public interface AccountService {
 
 	<S extends Account> List<S> saveAll(Iterable<S> entities);
 
-	Optional<Account> findById(String id);
+	Optional<Account> findById(String username);
 
 	List<Account> findAllById(Iterable<String> ids);
 

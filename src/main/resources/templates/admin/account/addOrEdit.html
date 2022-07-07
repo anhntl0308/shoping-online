@@ -7,13 +7,14 @@
     <div layout:fragment="content" class="container justify-items-center content-center mx-auto mt-10 max-w-[400px]">
     
         <form th:action="@{/admin/accounts/saveOrUpdate}" th:object="${accountDto}" method="post">
-        	<H1 class="text-center text-4xl mb-10">Add or Edit</H1>
+        	<H1 class="text-center text-4xl mb-10" th:text="${accountDto.isEdit?'Edit Eccount':'Add New Account'}">Add or Edit</H1>
             <div class="mb-6">
+            	<input type="hidden" th:field="*{isEdit}">
                 <label for="category-id" class="block mb-2 text-sm font-medium text-gray-900 "> Username</label>
                 <input type="text" id="username" th:field="*{username}" name="username"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="username">
-                <div class="flex p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                <div th:if="${#fields.hasErrors('username')}" class="flex p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
                     role="alert">
                     <svg class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
@@ -31,7 +32,7 @@
                 <input type="password" id="password" th:field="*{password}" name="password"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     placeholder="password">
-                <div class="flex p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                <div th:if="${#fields.hasErrors('password')}" class="flex p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
                     role="alert">
                     <svg class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">

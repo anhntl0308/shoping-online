@@ -1,33 +1,29 @@
 package edu.lanh.shop.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import javax.validation.Valid;
 
+import org.codehaus.groovy.util.StringUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.util.StringUtils;
 
 import edu.lanh.shop.domain.Account;
 import edu.lanh.shop.model.AccountDto;
-import edu.lanh.shop.model.ProductDto;
 import edu.lanh.shop.service.AccountService;
 
 @Controller
@@ -55,38 +51,45 @@ public class AccountController {
 		model.addAttribute("message", "Account is saved");
 		return new ModelAndView("forward:/admin/accounts", model);
 	}
+	@RequestMapping("")
+	public String list(ModelMap model) {
+		List<Account> list = accountService.findAll();
+		model.addAttribute("accounts", list);
+		return "admin/account/list";
+	}
+	
+	@GetMapping("delete/{username}")
+	public ModelAndView delete(ModelMap model, @PathVariable("username") String username) {
+		Account account = accountService.getOne(username);
+		if(account!=null) {
+			accountService.delete(account);
+			model.addAttribute("message", "Account is deleted!");
+		} else {
+
+			model.addAttribute("message", "Account is not exist!");
+		}
+		return new ModelAndView("forward:/admin/accounts", model);
+	}
+	@GetMapping("edit/{username}")
+	public ModelAndView edit(ModelMap model, @PathVariable("username") String username) {
+		Optional<Account> opt = accountService.findById(username);
+		AccountDto accountDto = new AccountDto();
+		if(opt.isPresent()) {
+			Account entity = opt.get();
+			BeanUtils.copyProperties(entity, accountDto);
+			accountDto.setIsEdit(true);
+			accountDto.setPassword("");
+			model.addAttribute("accountDto", accountDto);
+			return new ModelAndView("admin/account/addOrEdit", model);
+		}
+		model.addAttribute("message", "Account is not existed");
+		return new ModelAndView("redirect:/admin/accounts", model);
+	}
 	
 	
-//	@GetMapping("edit/{categoryId}")
-//	public ModelAndView edit(ModelMap model, @PathVariable("categoryId") Long categoryId) {
-//		Optional<Category> opt = categoryService.findById(categoryId);
-//		CategoryDto categoryDto = new CategoryDto();
-//		if(opt.isPresent()) {
-//			Category entity = opt.get();
-//			BeanUtils.copyProperties(entity, categoryDto);
-//			categoryDto.setIsEdit(true);
-//			model.addAttribute("categoryDto", categoryDto);
-//			return new ModelAndView("admin/category/addOrEdit", model);
-//		}
-//		model.addAttribute("message", "Category is not existed");
-//		return new ModelAndView("redirect:/admin/categories", model);
-//	}
-//	
-//	@GetMapping("delete/{categoryId}")
-//	public ModelAndView delete(ModelMap model, @PathVariable("categoryId") Long categoryId) {
-//		categoryService.deleteById(categoryId);
-//		model.addAttribute("message", "Category is deleted!");
-//		return new ModelAndView("forward:/admin/categories", model);
-//	}
-//	
 
 //	
-//	@RequestMapping("")
-//	public String list(ModelMap model) {
-//		List<Category> list = categoryService.findAll();
-//		model.addAttribute("categories", list);
-//		return "admin/category/list";
-//	}
+
 //	
 //	@GetMapping("search")
 //	public String search(ModelMap model, @RequestParam(name = "name", required=false) String name) {

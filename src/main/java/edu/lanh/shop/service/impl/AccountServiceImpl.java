@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import edu.lanh.shop.domain.Account;
 import edu.lanh.shop.repository.AccountReponsitory;
@@ -29,7 +30,14 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Override
 	public <S extends Account> S save(S entity) {
-		entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
+		Optional<Account> opt = findById(entity.getUsername());
+		if(opt.isPresent()) {
+			if(StringUtils.isEmpty(entity.getPassword())) {
+				entity.setPassword(opt.get().getPassword());
+			} else {
+				entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
+			}
+		}
 		return accountReponsitory.save(entity);
 	}
 
